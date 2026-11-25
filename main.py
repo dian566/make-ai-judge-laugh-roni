@@ -14,10 +14,16 @@ ENTRY = (
     "ever read."
 )
 
+MAX_CHARS = 200
+
 OUTPUT = Path("/output/entry.txt")
 
 
 def main() -> None:
+    if not 1 <= len(ENTRY) <= MAX_CHARS:
+        raise ValueError(f"entry must be 1-{MAX_CHARS} characters, got {len(ENTRY)}")
+    if "\n" in ENTRY:
+        raise ValueError("entry must be a single line")
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT.write_text(ENTRY, encoding="utf-8")
 
